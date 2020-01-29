@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Calcite Maps and Bootstrap - 4.14</title>
+
+    <!-- Calcite Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://esri.github.io/calcite-maps/dist/css/calcite-maps-bootstrap.min-v0.8.css"
+    />
+
+    <!-- Calcite Maps -->
+    <link
+      rel="stylesheet"
+      href="https://esri.github.io/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min-v0.8.css"
+    />
+
+    <!-- ArcGIS JS 4 -->
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.14/esri/themes/light/main.css"
+    />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
+      #f1{
+         position: absolute;
+         top: 50px;
+         right: 100px;         
+         left: 0;
+         
+         
+         background-color: rgba(0, 0, 0, 0.5);    
+      }
+        
+
+      
+    </style>
+  </head>
+
+  <body class="calcite-maps calcite-nav-top">
+    <!-- Navbar -->
+
+    <nav class="navbar calcite-navbar navbar-fixed-top calcite-text-light calcite-bg-dark">
+      <!-- Menu -->
+      <div class="dropdown calcite-dropdown calcite-text-dark calcite-bg-light" role="presentation">
+        <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
+          <div class="calcite-dropdown-toggle">
+            <span class="sr-only">Toggle dropdown menu</span> <span></span>
+            <span></span> <span></span> <span></span>
+          </div>
+        </a>
+        <ul class="dropdown-menu">
+          <li class="active">
+            <a class="hidden-md hidden-lg" href="#mapTab" aria-controls="mapTab" role="tab" data-toggle="tab">Map</a>
+          </li>   
+          
+          <li>
+            <a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a>
+          </li>
+        </ul>
+      </div>
+      <!-- Title -->
+      <div class="calcite-title calcite-overflow-hidden">
+        <span class="calcite-title-main">Calcite Maps</span>
+        <span class="calcite-title-divider hidden-xs"></span>
+        <span class="calcite-title-sub hidden-xs">A modern framework for building map apps</span>
+      </div>
+      <!-- Nav -->
+      <ul class="nav navbar-nav calcite-nav">
+        <li class="active">
+          <a id="mapNav" class="hidden-xs hidden-sm" href="#mapTab" aria-controls="mapTab" aria-expanded="true" role="tab"
+            data-toggle="tab" data-tooltip="tip" title="2D View" data-placement="bottom">Map</a>
+        </li>       
+      </ul>
+    </nav>
+    <!--/.calcite-navbar -->
+
+
+    <!-- Map  -->
+    <div class="calcite-map calcite-map-absolute">
+      <div id="tabContainer" class="tab-content">
+        <div id="mapTab" class="tab-pane fade in active" role="tabpanel">        
+          <div id="mapViewDiv">
+          </div>        
+          </div>
+        </div>
+
+        <div id="f1" class="js-modal modal-overlay modifier-class" data-modal="foo">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  ...
+                </div>
+                <div class="modal-footer">
+                  <button id="f2" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button id="f3" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+            </div>
+        
+      </div>
+
+
+    
+    <!-- /.calcite-map -->
+    
+    
+    
+    <!-- Panels -->
+    <div class="calcite-panels calcite-panels-right calcite-text-light calcite-bg-dark panel-group">
+    <div id="panelSettings" class="panel panel-map collapse">  
+
+      <!-- Panel Settings -->
+
+      
+        
+    </div>
+ 
+    
+    <!-- /.calcite-panels -->
+
+    <script type="text/javascript">
+      var dojoConfig = {
+        packages: [
+          {
+            name: "bootstrap",
+            location:
+              "https://esri.github.io/calcite-maps/dist/vendor/dojo-bootstrap"
+          },
+          {
+            name: "calcite-maps",
+            location: "https://esri.github.io/calcite-maps/dist/js/dojo"
+          }
+        ]
+      };
+    </script>
+    <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/js/calcite-web.min.js"></script>
+    <script>
+      calcite.init()
+    </script>
+    <!-- ArcGIS JS 4 -->
+    <script src="https://js.arcgis.com/4.14/"></script>
+
+    <script>
+      var app;
+
+      require([
+        "esri/Map",
+        "esri/views/MapView",      
+        "esri/core/watchUtils",
+        // Calcite Maps
+        "calcite-maps/calcitemaps-v0.8",
+
+        // Calcite Maps ArcGIS Support
+        "calcite-maps/calcitemaps-arcgis-support-v0.8",
+
+        // Bootstrap
+        "bootstrap/Collapse",
+        "bootstrap/Dropdown",
+        "bootstrap/Tab",
+
+        // Can use @dojo shim for Array.from for IE11
+        "@dojo/framework/shim/array"
+      ], function(
+        Map,
+        MapView,       
+        watchUtils,
+        CalciteMaps,
+        CalciteMapsArcGIS
+      ) {
+        /******************************************************************
+         *
+         * App settings
+         *
+         ******************************************************************/
+
+        var map = new Map({
+          basemap: "topo"
+        });
+
+        var view = new MapView({
+          container: "mapViewDiv",
+          map: map,
+          center: [-71.11607611178287, 42.37410778220068], /*-71.11607611178287, 42.37410778220068*/
+          zoom: 12,        
+          padding: {top: 50, bottom: 0}, 
+          breakpoints: {xsmall: 768, small: 769, medium: 992, large: 1200}        
+        });
+
+        CalciteMapsArcGIS.setPopupPanelSync(view);        
+
+        // Set the active view to scene
+        setActiveView(view);  
+      
+        // Views
+        function setActiveView(view1) {
+          view  = view1;
+        }
+
+        var click = calcite.click();
+        var n1 = document.getElementById("f1");
+        var n2 = document.getElementById("f2");
+        n2.onclick = function(){
+            calcite.addClass(n1, 'fade');
+            view.goTo({center: [-71, 42], zoom: 13})
+        };
+        /*
+        var click = calcite.click();
+        var node = document.querySelector('body');
+
+        function action (event) {
+          console.log('hola');
+          console.log(document.getElementById("f1"))
+          var node = document.getElementById("f1");
+          calcite.addClass(node, 'fade');
+          app.mapView.goTo({center: [-71, 42], zoom: 13})
+          
+          //calcite.removeClass("f1", fade)
+          
+        };
+
+        calcite.addEvent(node, click, action); // action will now fire when body is clicked
+        */
+      
+        
+      });
+    </script>
+  </body>
+</html>
