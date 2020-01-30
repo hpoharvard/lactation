@@ -50,7 +50,7 @@ require([
       var yMax = 5217414.497463334;
       var yMin = 5216847.191394078;      
 
-      var isMobile = {
+      /*var isMobile = {
           Android: function() {
               return navigator.userAgent.match(/Android/i);
           },
@@ -79,7 +79,7 @@ require([
         xMin = -7917088.961733397;
         yMax = 5217530.483504136;
         yMin = 5216121.17579509;
-      };
+      };*/
      
       var lactationURL = "https://devtmap.cadm.harvard.edu/server/rest/services/Hosted/lactationroom/FeatureServer"
       var lactationPopup = { // autocasts as new PopupTemplate()
@@ -121,7 +121,7 @@ require([
         breakpoints: {xsmall: 768, small: 769, medium: 992, large: 1200}        
       });
       
-      lactationLayer.popupTemplate = lactationPopup; 
+      lactationLayer.popupTemplate = lactationPopup;
 
       // Disables map rotation
       view.constraints = {rotationEnabled: false};
@@ -135,45 +135,35 @@ require([
       view.ui.add(locateBtn, {position: "top-left"});
 
       // add on mouse click on a map, clear popup and open it     
-      view.on("click", function(evt) {
-        evt.stopPropagation()
-               
-        //document.getElementById("alert_placeholder").style.display = "none";
-        
+      view.on("click", function(evt) {        
+        evt.stopPropagation()                       
         var infoBuildings = document.getElementById("infoBuildings");            
         infoBuildings.options[0].selected = true;        
-        var screenPoint = evt.screenPoint;
-        //console.log(screenPoint)
+        var screenPoint = evt.screenPoint;        
         // set location for the popup
         view.popup.location = evt.mapPoint;
-        view.hitTest(screenPoint).then(getSingleBuilding);        
-        //view.hitTest(screenPoint).then(getSingleBuilding)
-                
+        view.popup.visible = true;
+        view.hitTest(screenPoint).then(getSingleBuilding);                
       });
       
       // create the popup and select the building footprint          
       function getSingleBuilding(response) {
-        lactationLayer.popupTemplate = lactationPopup;         
+        resultsLayer.popupTemplate = lactationPopup;         
         resultsLayer.removeAll();
         var graphic = response.results[0].graphic;
         var attributes = graphic.attributes;        
-        var name = attributes.Primary_Building_Name;        
+        var name = attributes.Primary_Building_Name;
+        var zfirsttimeregistration = attributes.firsttimeregistration;
+        var zalreadyregistered = attributes.alreadyregistered;        
         var infoBuildings = document.getElementById("infoBuildings");
-        
-        /*for (var i = 0; i < infoBuildings.options.length; i++) {           
-            if (infoBuildings.options[i].value === name) {                
-                infoBuildings.selectedIndex = i;
-                break;
-            }
-        }*/
         
         var pGraphic = new Graphic({
           geometry: response.results[0].graphic.geometry,
           symbol: new SimpleFillSymbol({
-            color: [ 255,0, 0, 0.6],
+            color: [ 255,0, 0, 0.4],
             style: "solid",
             outline: {  // autocasts as esri/symbols/SimpleLineSymbol
-              color: "blue",
+              color: "red",
               width: 2
             }
           })
@@ -181,21 +171,12 @@ require([
         
         resultsLayer.add(pGraphic);
 
-        var list = document.createElement('ul');
-        var obj = attributes;
-        console.log(obj)        
-        for(var i in obj){            
-          if (obj[i] == "Yes"){            
-            //console.log(obj[i],i);
-            var item = document.createElement('li');                
-            item.appendChild(document.createTextNode(i.split(/(?=[A-Z])/).join(" ")));               
-            list.appendChild(item);
-          }
-        }
         // create content for the popup
-        var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + results.features[0].attributes.image;
-        var zcontent = "<div><img src='" + zimg + "'</img></div>"
-        //var zcontent = "<div><img width='300px' src='https://map.harvard.edu/images/bldg_photos/" + attributes.url + "'</img>" + "<p>" + attributes.Notes + "</p><p>" + list.outerHTML + "</p></div>";        
+        var popupDiv = document.createElement("img")
+        var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + attributes.image;
+        popupDiv.src = zimg;
+
+        var zcontent = popupDiv.outerHTML + "<p><ul><li>" + zfirsttimeregistration + "</li><li>" + zalreadyregistered + "</li></ul></p>";        
         
         view.popup.open({
           title: attributes.primary_building_name,
@@ -203,27 +184,9 @@ require([
         });        
       } 
 
-
-      function displayResults(results) {
-        view.extent = new Extent({ xmin: xMin, ymin: yMin, xmax: xMax, ymax: yMax, spatialReference: 102100});         
-        resultsLayer.removeAll();
-        
-        var features = results.features.map(function(graphic) {
-          graphic.symbol = new SimpleFillSymbol({
-            color: [ 255,0, 0, 0.6],
-            style: "solid",
-            outline: {  // autocasts as esri/symbols/SimpleLineSymbol
-              color: "red",
-              width: 2
-            }
-          });
-          return graphic;
-        });
-        
-        resultsLayer.addMany(features);
-      }  
-
-      // process the regions selection
+      /********************************
+      * Process the regions selection
+      *********************************/  
 
       function queryLactationRegion(myval) {
         var query = lactationLayer.createQuery();
@@ -236,9 +199,8 @@ require([
       var infoBuildings = document.getElementById("infoBuildings");  
 
       regions.addEventListener("change", function() {        
-        var selectedRegions = regions.options[regions.selectedIndex].value;
-        //console.log(infoBuildings.length)              
-        // remove all the building option
+        var selectedRegions = regions.options[regions.selectedIndex].value;        
+        // remove all the buildings from the options select
         for (i = 1; i < infoBuildings.length; i++) {             
             infoBuildings.remove(i); 
             i--;           
@@ -266,14 +228,15 @@ require([
         }
       });
       
-      // process to select a specific building 
+      /********************************
+      * Process to select a specific building
+      *********************************/   
 
       function resultsLactationQuery(results) { 
         var list = document.getElementById('infoBuildings');
         var obj = results.features;
         //console.log(obj)
-        for(var i in obj){            
-          //console.log(obj[i].attributes.primary_building_name,i);
+        for(var i in obj){                      
           var option = document.createElement('option');                
           option.text = obj[i].attributes.primary_building_name;
           option.value = obj[i].attributes.primary_building_name;
@@ -287,8 +250,6 @@ require([
         var selectedBuildings = buildingInfo.options[buildingInfo.selectedIndex].value;        
         console.log(selectedBuildings)
         queryLactationBuldings(selectedBuildings).then(displayResultsBuldings);
-        //var dorms = document.getElementById("infoDorms");        
-        //dorms.options[0].selected = true;
         view.popup.visible = true;
       });
 
@@ -303,7 +264,7 @@ require([
         resultsLayer.removeAll();
         var features = results.features.map(function(graphic) {
           graphic.symbol = new SimpleFillSymbol({
-            color: [ 255,0, 0, 0.6],
+            color: [ 255,0, 0, 0.4],
             style: "solid",
             outline: {  // autocasts as esri/symbols/SimpleLineSymbol
               color: "red",
@@ -315,17 +276,7 @@ require([
         
         var list = document.createElement('ul');
         var obj = results.features[0].attributes;
-        console.log(results.features[0].attributes.image)
         
-        
-        /*for(var i in obj){            
-          if (obj[i] == "Yes"){        
-            //console.log(obj[i],i);
-            var item = document.createElement('li');                
-            item.appendChild(document.createTextNode(i.split(/(?=[A-Z])/).join(" ")));               
-            list.appendChild(item);
-          }
-        } */
         var popupDiv = document.createElement("img")
         var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + results.features[0].attributes.image;
         popupDiv.src = zimg;
@@ -338,23 +289,19 @@ require([
         var zdooraccess = results.features[0].attributes.zpumpmedelasymphony;
         var zpumpmedelasymphony = results.features[0].attributes.zpumpmedelasymphony;
         var zsink = results.features[0].attributes.zsink;
-        var zrefrigerator = results.features[0].attributes.zrefrigerator;
-       
+        var zrefrigerator = results.features[0].attributes.zrefrigerator;       
         
-        var zcontent = "<div><ul><li>" + zfirsttimeregistration + "</li><li>" + zalreadyregistered + "</li><li>Private Space: " 
-        + zprivatespaces + "</li><li>Reservation Online: " + zreservationonly + "</li><li>Dropin: " + zdropin +"</li></ul></div>";        
+        var zcontent = popupDiv.outerHTML + "<p><ul><li>" + zfirsttimeregistration + "</li><li>" + zalreadyregistered + "</li><li>Private Space: " 
+        + zprivatespaces + "</li><li>Reservation Online: " + zreservationonly + "</li><li>Dropin: " + zdropin +"</li></ul></p>";        
         
         view.center = [ results.features[0].geometry.centroid.longitude, results.features[0].geometry.centroid.latitude]
 
         view.popup.open({
           title: results.features[0].attributes.primary_building_name,
-          content: popupDiv + zcontent,
+          content: zcontent,
           updateLocationEnabled: true,
           location: view.center
-        });
-         
+        });         
         resultsLayer.addMany(features);        
-      }
-
-              
+      }              
     });
