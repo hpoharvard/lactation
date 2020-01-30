@@ -6,9 +6,7 @@ require([
       "esri/widgets/Locate",
       "esri/layers/FeatureLayer",
       "esri/layers/GraphicsLayer",
-      "esri/Graphic",
-      //"esri/layers/MapImageLayer",
-      //"esri/layers/TileLayer",
+      "esri/Graphic",      
       "esri/renderers/SimpleRenderer",
       "esri/symbols/SimpleMarkerSymbol",
       "esri/symbols/SimpleFillSymbol",
@@ -48,38 +46,7 @@ require([
       var xMax = -7915458.81211143;
       var xMin = -7917751.9229597915;
       var yMax = 5217414.497463334;
-      var yMin = 5216847.191394078;      
-
-      /*var isMobile = {
-          Android: function() {
-              return navigator.userAgent.match(/Android/i);
-          },
-          BlackBerry: function() {
-              return navigator.userAgent.match(/BlackBerry/i);
-          },
-          iOS: function() {
-              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-          },
-          Opera: function() {
-              return navigator.userAgent.match(/Opera Mini/i);
-          },
-          Windows: function() {
-              return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
-          },
-          any: function() {
-              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-          }
-      };
-
-      if( isMobile.any() ) {
-        myzoom = 16; 
-        lon = -71.116286; 
-        lat = 43.67175;
-        xMax = -7916229.045165166; 
-        xMin = -7917088.961733397;
-        yMax = 5217530.483504136;
-        yMin = 5216121.17579509;
-      };*/
+      var yMin = 5216847.191394078;     
      
       var lactationURL = "https://devtmap.cadm.harvard.edu/server/rest/services/Hosted/lactationroom/FeatureServer"
       var lactationPopup = { // autocasts as new PopupTemplate()
@@ -88,11 +55,11 @@ require([
       
       var buildingRenderer = new SimpleRenderer({
         symbol: new SimpleFillSymbol({
-          color: [217, 176, 43, 0.5],
+          color: [0, 121, 193, 0.5],
           style: "solid",
           outline: {
             width: 1.2,
-            color: "black"
+            color: "blue"
           }
         })
       });
@@ -107,7 +74,7 @@ require([
       var resultsLayer = new GraphicsLayer();
 
       var map = new Map({
-        basemap: "gray",
+        basemap: "topo",
         layers: [lactationLayer, resultsLayer],
 
       });
