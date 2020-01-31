@@ -120,8 +120,6 @@ require([
         var graphic = response.results[0].graphic;
         var attributes = graphic.attributes;        
         var name = attributes.Primary_Building_Name;
-        var zfirsttimeregistration = attributes.firsttimeregistration;
-        var zalreadyregistered = attributes.alreadyregistered;        
         var infoBuildings = document.getElementById("infoBuildings");
         
         var pGraphic = new Graphic({
@@ -142,9 +140,20 @@ require([
         var popupDiv = document.createElement("img")
         var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + attributes.image;
         popupDiv.src = zimg;
-
-        var zcontent = popupDiv.outerHTML + "<p><ul><li>" + zfirsttimeregistration + "</li><li>" + zalreadyregistered + "</li></ul></p>";        
         
+        var firsttimeregistration = attributes.firsttimeregistration;
+        var alreadyregistered = attributes.alreadyregistered;
+        var privatespaces = attributes.privatespaces;
+        var reservationonly = attributes.reservationonly;
+        var dropin = attributes.dropin;
+        var dooraccess = attributes.dooraccess;
+        var pumpmedelasymphony = attributes.pumpmedelasymphony;
+        var sink = attributes.sink;
+        var refrigerator = attributes.refrigerator;
+        var additionalnotes = attributes.additionalnotes;
+        
+        var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + firsttimeregistration + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
+
         view.popup.open({
           title: attributes.primary_building_name,
           content: zcontent
@@ -197,8 +206,7 @@ require([
       
       /********************************
       * Process to select a specific building
-      *********************************/   
-
+      *********************************/  
       function resultsLactationQuery(results) { 
         var list = document.getElementById('infoBuildings');
         var obj = results.features;
@@ -217,7 +225,7 @@ require([
         var selectedBuildings = buildingInfo.options[buildingInfo.selectedIndex].value;        
         console.log(selectedBuildings)
         queryLactationBuldings(selectedBuildings).then(displayResultsBuldings);
-        view.popup.visible = true;
+        //view.popup.visible = true;
       });
 
       function queryLactationBuldings(myval) {
@@ -248,25 +256,25 @@ require([
         var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + results.features[0].attributes.image;
         popupDiv.src = zimg;
         
-        var zfirsttimeregistration = results.features[0].attributes.firsttimeregistration;
-        var zalreadyregistered = results.features[0].attributes.alreadyregistered;
-        var zprivatespaces = results.features[0].attributes.zprivatespaces;
-        var zreservationonly = results.features[0].attributes.zreservationonly;
-        var zdropin = results.features[0].attributes.zdropin;
-        var zdooraccess = results.features[0].attributes.zpumpmedelasymphony;
-        var zpumpmedelasymphony = results.features[0].attributes.zpumpmedelasymphony;
-        var zsink = results.features[0].attributes.zsink;
-        var zrefrigerator = results.features[0].attributes.zrefrigerator;       
+        var firsttimeregistration = results.features[0].attributes.firsttimeregistration;
+        var alreadyregistered = results.features[0].attributes.alreadyregistered;
+        var privatespaces = results.features[0].attributes.privatespaces;
+        var reservationonly = results.features[0].attributes.reservationonly;
+        var dropin = results.features[0].attributes.dropin;
+        var dooraccess = results.features[0].attributes.dooraccess;
+        var pumpmedelasymphony = results.features[0].attributes.pumpmedelasymphony;
+        var sink = results.features[0].attributes.sink;
+        var refrigerator = results.features[0].attributes.refrigerator;
+        var additionalnotes = results.features[0].attributes.additionalnotes;
         
-        var zcontent = popupDiv.outerHTML + "<p><ul><li>" + zfirsttimeregistration + "</li><li>" + zalreadyregistered + "</li><li>Private Space: " 
-        + zprivatespaces + "</li><li>Reservation Online: " + zreservationonly + "</li><li>Dropin: " + zdropin +"</li></ul></p>";        
-        
-        view.center = [ results.features[0].geometry.centroid.longitude, results.features[0].geometry.centroid.latitude]
+        var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + firsttimeregistration + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
 
+        view.center = [ results.features[0].geometry.centroid.longitude, results.features[0].geometry.centroid.latitude]
+        console.log(view.center)
         view.popup.open({
           title: results.features[0].attributes.primary_building_name,
           content: zcontent,
-          updateLocationEnabled: true,
+          //updateLocationEnabled: false,
           location: view.center
         });         
         resultsLayer.addMany(features);        
