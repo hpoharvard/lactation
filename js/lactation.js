@@ -37,7 +37,8 @@ require([
         Allston: [-71.1237912, 42.3626648],
         Arboretum: [-71.1333697, 42.295822],
         Cambridge: [-71.1168498, 42.3759086],
-        Longwood: [-71.1024294, 42.3389915]
+        Longwood: [-71.1024294, 42.3389915],
+        Forest: [-72.190308, 42.5313531]
       } 
 
       //document.getElementById("foo").style.display = "none"; 
@@ -48,7 +49,7 @@ require([
       var yMax = 5217414.497463334;
       var yMin = 5216847.191394078;     
      
-      var lactationURL = "https://devtmap.cadm.harvard.edu/server/rest/services/Hosted/lactationroom/FeatureServer"
+      var lactationURL = "https://devtmap.cadm.harvard.edu/server/rest/services/Hosted/lactationroom04132020/FeatureServer"
       var lactationPopup = { // autocasts as new PopupTemplate()
         title: "{buildingroomname}",       
       };
@@ -140,20 +141,33 @@ require([
         var popupDiv = document.createElement("img")
         var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + attributes.image;
         popupDiv.src = zimg;
+
+        var popupHref = document.createElement("a");
+        var createAText = document.createTextNode('Lactation Support');
+        popupHref.setAttribute('href', attributes.firsttime);
+        popupHref.target = '_blank';
+        popupHref.appendChild(createAText);
         
-        var firsttimeregistration = attributes.firsttimeregistration;
+        var firsttimeregistration = attributes.firsttime;        
         var alreadyregistered = attributes.alreadyregistered;
         var privatespaces = attributes.privatespaces;
         var reservationonly = attributes.reservationonly;
-        var dropin = attributes.dropin;
+        var dropin = attributes.drop_in;
         var dooraccess = attributes.dooraccess;
-        var pumpmedelasymphony = attributes.pumpmedelasymphony;
+        var pumpmedelasymphony = attributes.pump;
         var sink = attributes.sink;
         var refrigerator = attributes.refrigerator;
         var additionalnotes = attributes.additionalnotes;
-        
-        var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + firsttimeregistration + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
 
+        console.log(popupHref.outerHTML)
+
+        if(attributes.image == '02845.jpg' || attributes.image == '02805.jpg'){
+          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
+        }
+        else{
+          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
+        }        
+        //var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + firsttimeregistration + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
         view.popup.open({
           title: attributes.primary_building_name,
           content: zcontent
@@ -199,7 +213,7 @@ require([
               //console.log(key[1], key[0])
               view.center = key[1]
               view.zoom = 16;
-              queryLactationRegion(selectedRegions).then(resultsLactationQuery)            
+              queryLactationRegion(selectedRegions).then(resultsLactationQuery);            
             }            
         }
       });
@@ -255,20 +269,32 @@ require([
         var popupDiv = document.createElement("img")
         var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + results.features[0].attributes.image;
         popupDiv.src = zimg;
+
+        var popupHref = document.createElement("a");
+        var createAText = document.createTextNode('Lactation Support');
+        popupHref.setAttribute('href', results.features[0].attributes.firsttime);
+        popupHref.target = '_blank';
+        popupHref.appendChild(createAText);
         
-        var firsttimeregistration = results.features[0].attributes.firsttimeregistration;
+        //var firsttimeregistration = results.features[0].attributes.firsttime;
         var alreadyregistered = results.features[0].attributes.alreadyregistered;
         var privatespaces = results.features[0].attributes.privatespaces;
         var reservationonly = results.features[0].attributes.reservationonly;
-        var dropin = results.features[0].attributes.dropin;
+        var dropin = results.features[0].attributes.drop_in;
         var dooraccess = results.features[0].attributes.dooraccess;
-        var pumpmedelasymphony = results.features[0].attributes.pumpmedelasymphony;
+        var pumpmedelasymphony = results.features[0].attributes.pump;
         var sink = results.features[0].attributes.sink;
         var refrigerator = results.features[0].attributes.refrigerator;
         var additionalnotes = results.features[0].attributes.additionalnotes;
         
-        var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + firsttimeregistration + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
-
+        
+        if(results.features[0].attributes.image == '02845.jpg' || results.features[0].attributes.image == '02805.jpg'){
+          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
+        }
+        else{
+          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
+        }
+        
         view.center = [ results.features[0].geometry.centroid.longitude, results.features[0].geometry.centroid.latitude]
         console.log(view.center)
         view.popup.open({
@@ -277,6 +303,7 @@ require([
           //updateLocationEnabled: false,
           location: view.center
         });         
-        resultsLayer.addMany(features);        
+        resultsLayer.addMany(features);
+
       }              
     });
