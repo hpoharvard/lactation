@@ -105,12 +105,13 @@ require([
       // add on mouse click on a map, clear popup and open it     
       view.on("click", function(evt) {        
         evt.stopPropagation()                       
-        var infoBuildings = document.getElementById("infoBuildings");            
+        var infoBuildings = document.getElementById("infoBuildings");  
+        //console.log(infoBuildings)          
         infoBuildings.options[0].selected = true;        
         var screenPoint = evt.screenPoint;        
         // set location for the popup
         view.popup.location = evt.mapPoint;
-        view.popup.visible = true;
+        view.popup.visible = false;
         view.hitTest(screenPoint).then(getSingleBuilding);                
       });
       
@@ -159,9 +160,9 @@ require([
         var refrigerator = attributes.refrigerator;
         var additionalnotes = attributes.additionalnotes;
 
-        console.log(popupHref.outerHTML)
+        //console.log(popupHref.outerHTML)
 
-        if(attributes.image == '02845.jpg' || attributes.image == '02805.jpg'){
+        if(attributes.image == '02845.jpg' || attributes.image == '02805.jpg' || attributes.image == '02121.jpg' || attributes.image == '06318.jpg' || attributes.image == '02124.jpg' || attributes.image == '01208.jpg'){
           var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
         }
         else{
@@ -285,10 +286,9 @@ require([
         var pumpmedelasymphony = results.features[0].attributes.pump;
         var sink = results.features[0].attributes.sink;
         var refrigerator = results.features[0].attributes.refrigerator;
-        var additionalnotes = results.features[0].attributes.additionalnotes;
+        var additionalnotes = results.features[0].attributes.additionalnotes;        
         
-        
-        if(results.features[0].attributes.image == '02845.jpg' || results.features[0].attributes.image == '02805.jpg'){
+        if(attributes.image == '02845.jpg' || attributes.image == '02805.jpg' || attributes.image == '02121.jpg' || attributes.image == '06318.jpg' || attributes.image == '02124.jpg' || attributes.image == '01208.jpg'){
           var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
         }
         else{
@@ -296,7 +296,7 @@ require([
         }
         
         view.center = [ results.features[0].geometry.centroid.longitude, results.features[0].geometry.centroid.latitude]
-        console.log(view.center)
+        //console.log(view.center)
         view.popup.open({
           title: results.features[0].attributes.primary_building_name,
           content: zcontent,
@@ -304,6 +304,5 @@ require([
           location: view.center
         });         
         resultsLayer.addMany(features);
-
       }              
     });
