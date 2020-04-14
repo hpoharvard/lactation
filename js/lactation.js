@@ -1,5 +1,7 @@
 // code by Giovanni Zambotti - 23 January 2020
 // update to ESRI JS 4.14 - 23 January 2020
+// code update - 13 April 2020
+
 require([
       "esri/Map",
       "esri/views/MapView",      
@@ -138,9 +140,11 @@ require([
         
         resultsLayer.add(pGraphic);
 
+        var image = attributes.image;
+
         // create content for the popup
         var popupDiv = document.createElement("img")
-        var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + attributes.image;
+        var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + image;
         popupDiv.src = zimg;
 
         var popupHref = document.createElement("a");
@@ -158,15 +162,15 @@ require([
         var pumpmedelasymphony = attributes.pump;
         var sink = attributes.sink;
         var refrigerator = attributes.refrigerator;
-        var additionalnotes = attributes.additionalnotes;
+        var additionalnotes = attributes.notes;
 
         //console.log(popupHref.outerHTML)
 
-        if(attributes.image == '02845.jpg' || attributes.image == '02805.jpg' || attributes.image == '02121.jpg' || attributes.image == '06318.jpg' || attributes.image == '02124.jpg' || attributes.image == '01208.jpg'){
-          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
+        if(image == '02845.jpg' || image == '02805.jpg' || image == '02121.jpg' || image == '06318.jpg' || image == '02124.jpg' || image == '01208.jpg'){
+          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional notes: " + additionalnotes + "</li></ul></p>"
         }
         else{
-          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
+          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional notes: " + additionalnotes + "</li></ul></p>"
         }        
         //var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + firsttimeregistration + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
         view.popup.open({
@@ -239,6 +243,7 @@ require([
       buildingInfo.addEventListener("change", function() {        
         var selectedBuildings = buildingInfo.options[buildingInfo.selectedIndex].value;        
         console.log(selectedBuildings)
+        //queryLactationBuldings(selectedBuildings)
         queryLactationBuldings(selectedBuildings).then(displayResultsBuldings);
         //view.popup.visible = true;
       });
@@ -247,6 +252,7 @@ require([
         var query = lactationLayer.createQuery();
         query.where = "primary_building_name = '" + myval + "'";
         query.outSpatialReference = 4326;
+        console.log(query)
         return lactationLayer.queryFeatures(query);        
       }      
 
@@ -263,6 +269,7 @@ require([
           });
           return graphic;
         });
+        
         
         var list = document.createElement('ul');
         var obj = results.features[0].attributes;
@@ -286,23 +293,26 @@ require([
         var pumpmedelasymphony = results.features[0].attributes.pump;
         var sink = results.features[0].attributes.sink;
         var refrigerator = results.features[0].attributes.refrigerator;
-        var additionalnotes = results.features[0].attributes.additionalnotes;        
+        var additionalnotes = results.features[0].attributes.notes;
+        var image = results.features[0].attributes.image;   
+      
         
-        if(attributes.image == '02845.jpg' || attributes.image == '02805.jpg' || attributes.image == '02121.jpg' || attributes.image == '06318.jpg' || attributes.image == '02124.jpg' || attributes.image == '01208.jpg'){
-          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
+        if(image == '02845.jpg' || image == '02805.jpg' || image == '02121.jpg' || image == '06318.jpg' || image == '02124.jpg' || image == '01208.jpg'){
+          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional notes: " + additionalnotes +  "</li></ul></p>"
         }
         else{
-          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
+          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional notes: " + additionalnotes + "</li></ul></p>"
         }
         
         view.center = [ results.features[0].geometry.centroid.longitude, results.features[0].geometry.centroid.latitude]
-        //console.log(view.center)
+        console.log(view.center)
         view.popup.open({
           title: results.features[0].attributes.primary_building_name,
           content: zcontent,
           //updateLocationEnabled: false,
           location: view.center
-        });         
+        }); 
+               
         resultsLayer.addMany(features);
       }              
     });
