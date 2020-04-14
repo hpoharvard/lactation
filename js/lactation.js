@@ -14,7 +14,8 @@ require([
       "esri/symbols/SimpleFillSymbol",
       "esri/renderers/UniqueValueRenderer",
       "esri/geometry/Extent",
-      "esri/widgets/Popup", 
+      "esri/widgets/Popup",
+      "esri/layers/VectorTileLayer", 
       
       // Calcite Maps
       "calcite-maps/calcitemaps-v0.8",
@@ -33,7 +34,7 @@ require([
     ], //function(Map, MapView, FeatureLayer, GraphicsLayer,Graphic, MapImageLayer, TileLayer, SimpleRenderer, SimpleMarkerSymbol, 
       //SimpleFillSymbol, UniqueValueRenderer) {
       function(Map, MapView, Locate, FeatureLayer, GraphicsLayer, Graphic, SimpleRenderer, SimpleMarkerSymbol, 
-      SimpleFillSymbol, UniqueValueRenderer, Extent, Popup, CalciteMaps, CalciteMapsArcGIS) {    
+      SimpleFillSymbol, UniqueValueRenderer, Extent, Popup, VectorTileLayer, CalciteMaps, CalciteMapsArcGIS) {    
       
       const regionsList = {
         Allston: [-71.1237912, 42.3626648],
@@ -49,7 +50,12 @@ require([
       var xMax = -7915458.81211143;
       var xMin = -7917751.9229597915;
       var yMax = 5217414.497463334;
-      var yMin = 5216847.191394078;     
+      var yMin = 5216847.191394078;
+
+      var vtlLayer = new VectorTileLayer({
+        // URL to the vector tile service
+        url: "https://www.arcgis.com/sharing/rest/content/items/7dc6cea0b1764a1f9af2e679f642f0f5/resources/styles/root.json"
+      });     
      
       var lactationURL = "https://devtmap.cadm.harvard.edu/server/rest/services/Hosted/lactationroom04132020/FeatureServer"
       var lactationPopup = { // autocasts as new PopupTemplate()
@@ -167,10 +173,10 @@ require([
         //console.log(popupHref.outerHTML)
 
         if(image == '02845.jpg' || image == '02805.jpg' || image == '02121.jpg' || image == '06318.jpg' || image == '02124.jpg' || image == '01208.jpg'){
-          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional notes: " + additionalnotes + "</li></ul></p>"
+          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
         }
         else{
-          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional notes: " + additionalnotes + "</li></ul></p>"
+          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
         }        
         //var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + firsttimeregistration + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
         view.popup.open({
@@ -298,10 +304,10 @@ require([
       
         
         if(image == '02845.jpg' || image == '02805.jpg' || image == '02121.jpg' || image == '06318.jpg' || image == '02124.jpg' || image == '01208.jpg'){
-          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional notes: " + additionalnotes +  "</li></ul></p>"
+          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes +  "</li></ul></p>"
         }
         else{
-          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional notes: " + additionalnotes + "</li></ul></p>"
+          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
         }
         
         view.center = [ results.features[0].geometry.centroid.longitude, results.features[0].geometry.centroid.latitude]
