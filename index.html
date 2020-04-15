@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=yes">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2,user-scalable=yes">
   <meta name="description" content="Harvard University, Lactation Map. Web Mapping about Harvard
   University Lactation Web Map">
   <meta name="keywords" content="HTML, CSS, JavaScript">
@@ -72,7 +72,7 @@
           <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseInfo"
             aria-expanded="false" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign
 " aria-hidden="true"></span><span class="panel-label">Info</span></a>
-          <a name="button_panelInfo" class="panel-close" role="button" data-toggle="collapse" data-target="#panelInfo"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+          <a name="panelInfo" class="panel-close" role="button" data-toggle="collapse" data-target="#panelInfo"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
         </div>
       </div>
       <div id="collapseInfo" class="panel-collapse" role="tabpanel" aria-labelledby="headingInfo">
@@ -92,11 +92,12 @@
         <div class="panel-title" style="background-color: rgb(210, 233, 249);">
           <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseFilter"
             aria-expanded="false" aria-controls="collapseFilter"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><span class="panel-label">Select a Campus region and a building</span></a>
-          <a name="button_panelFilterRegion" class="panel-close" role="button" data-toggle="collapse" data-target="#panelFilterRegion"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+          <a name="panelFilterRegion" class="panel-close" role="button" data-toggle="collapse" data-target="#panelFilterRegion"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
         </div>
       </div>
       <div id="collapseFilter" class="panel-collapse" role="tabpanel" aria-labelledby="headingFilter">
         <div class="panel-body">
+          <label for="infoRegions">Select a Campus region...</label>
           <select id="infoRegions" class="form-control">
             <option selected disabled hidden>Select a Campus region...</option>
             <option value= "Allston">Allston</option>
@@ -116,7 +117,7 @@
         <div class="panel-title" style="background-color: rgb(210, 233, 249);">
           <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseFilter"
             aria-expanded="false" aria-controls="collapseFilter"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span><span class="panel-label">Select a building</span></a>
-          <a name="button_panelFilterBuilding" class="panel-close" role="button" data-toggle="collapse" data-target="#panelFilterBuilding"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+          <a name="panelFilterBuilding" class="panel-close" role="button" data-toggle="collapse" data-target="#panelFilterBuilding"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
         </div>
       </div>
       <div id="collapseFilter" class="panel-collapse" role="tabpanel" aria-labelledby="headingFilter">
