@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=yes">
   <meta name="description" content="Harvard University, Lactation Map. Web Mapping about Harvard
   University Lactation Web Map">
   <meta name="keywords" content="HTML, CSS, JavaScript">
@@ -38,8 +38,8 @@
       </a>
       <ul class="dropdown-menu">
         <li><a role="button" data-target="#panelInfo" aria-haspopup="false"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>        
-        <li><a role="button" data-target="#panelFilterDorm" aria-haspopup="false"><span class="glyphicon glyphicon-home"></span>Select a Campus region</a></li>
-        <li><a role="button" data-target="#panelFilterAmenity" aria-haspopup="false"><span class="glyphicon glyphicon-filter"></span>Select a building</a></li>        
+        <li><a role="button" data-target="#panelFilterRegion" aria-haspopup="false"><span class="glyphicon glyphicon-home"></span> Select a Campus region</a></li>
+        <!--<li><a role="button" data-target="#panelFilterBuilding" aria-haspopup="false"><span class="glyphicon glyphicon-filter"></span> Select a building</a></li>    -->
         <li><a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
       </ul>
     </div>
@@ -66,16 +66,16 @@
   <!-- Panels -->
   <div class="calcite-panels calcite-panels-right calcite-text-dark calcite-bg-dark panel-group" style="background-color: rgb(  210, 233, 249);">
     <!-- Info Panel -->
-    <div id="panelInfo" class="panel collapse in">
+    <div id="panelInfo" class="panel collapse in" role="tablist">
       <div id="headingInfo" class="panel-heading" role="tab">
         <div class="panel-title" style="background-color: rgb(210, 233, 249);">
           <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseInfo"
             aria-expanded="false" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign
 " aria-hidden="true"></span><span class="panel-label">Info</span></a>
-          <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelInfo"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+          <a name="button_panelInfo" class="panel-close" role="button" data-toggle="collapse" data-target="#panelInfo"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
         </div>
       </div>
-      <div id="collapseInfo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingInfo">
+      <div id="collapseInfo" class="panel-collapse" role="tabpanel" aria-labelledby="headingInfo">
         <div id="foo" class="panel-body">
         This map shows buildings highlighted in blue that contain formal lactation rooms across Harvard’s campus. information about room amenities pops up when a building is selected which includes a link to the registration page. Each person (HUID holder or campus visitor) must register once for campus-wide access to lactation rooms and private room information. HUID holders will then be able to reserve and check room availability across campus.
         <!--
@@ -86,18 +86,16 @@
     </div>    
 
     <!-- Modal -->
-
-
-    <!-- Panel Filter Region-->
-    <div id="panelFilterRegion" class="panel collapse in" >
+    <!-- Panel Filter Region -->
+    <div id="panelFilterRegion" class="panel collapse in" role="tablist">
       <div id="headingFilter" class="panel-heading" role="tab">
         <div class="panel-title" style="background-color: rgb(210, 233, 249);">
           <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseFilter"
-            aria-expanded="false" aria-controls="collapseFilter"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><span class="panel-label">Select a Campus region</span></a>
-          <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelFilterRegion"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+            aria-expanded="false" aria-controls="collapseFilter"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><span class="panel-label">Select a Campus region and a building</span></a>
+          <a name="button_panelFilterRegion" class="panel-close" role="button" data-toggle="collapse" data-target="#panelFilterRegion"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
         </div>
       </div>
-      <div id="collapseFilter" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFilter">
+      <div id="collapseFilter" class="panel-collapse" role="tabpanel" aria-labelledby="headingFilter">
         <div class="panel-body">
           <select id="infoRegions" class="form-control">
             <option selected disabled hidden>Select a Campus region...</option>
@@ -111,15 +109,17 @@
       </div>      
     </div>
 
-    <div id="panelFilterBuilding" class="panel collapse in" >
+    <!-- Panel Filter Building -->
+    
+    <div id="panelFilterBuilding" class="panel collapse in" role="tablist">
       <div id="headingFilter" class="panel-heading" role="tab">
         <div class="panel-title" style="background-color: rgb(210, 233, 249);">
           <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseFilter"
             aria-expanded="false" aria-controls="collapseFilter"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span><span class="panel-label">Select a building</span></a>
-          <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelFilterBuilding"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+          <a name="button_panelFilterBuilding" class="panel-close" role="button" data-toggle="collapse" data-target="#panelFilterBuilding"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
         </div>
       </div>
-      <div id="collapseFilter" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFilter">
+      <div id="collapseFilter" class="panel-collapse" role="tabpanel" aria-labelledby="headingFilter">
         <div class="panel-body">
           <select id="infoBuildings" class="form-control">
               <option selected disabled hidden>Select a buildings...</option>            
@@ -127,9 +127,9 @@
         </div>                
       </div>      
     </div>
+  
   </div>
-
-
+  
   <!-- /.calcite-panels -->
   <script type="text/javascript">
     var dojoConfig = {
