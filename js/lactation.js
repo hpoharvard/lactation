@@ -59,7 +59,7 @@ require([
      
       var lactationURL = "https://devtmap.cadm.harvard.edu/server/rest/services/Hosted/lactationroom04132020/FeatureServer"
       var lactationPopup = { // autocasts as new PopupTemplate()
-        title: "{buildingroomname}",       
+        title: "{buildingroomname}"
       };
       
       var buildingRenderer = new SimpleRenderer({
@@ -101,6 +101,8 @@ require([
 
       // Disables map rotation
       view.constraints = {rotationEnabled: false};
+     
+      view.popup.dockOptions = {position: "bottom-left"}
                   
       /********************************
       * Create a locate widget object.
@@ -152,6 +154,7 @@ require([
         var popupDiv = document.createElement("img")
         var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + image;
         popupDiv.src = zimg;
+        popupDiv.alt = attributes.primary_building_name + " building image";
 
         var popupHref = document.createElement("a");
         var createAText = document.createTextNode('Lactation Support');
@@ -173,10 +176,10 @@ require([
         //console.log(popupHref.outerHTML)
 
         if(image == '02845.jpg' || image == '02805.jpg' || image == '02121.jpg' || image == '06318.jpg' || image == '02124.jpg' || image == '01208.jpg'){
-          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
+          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
         }
         else{
-          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
+          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
         }        
         //var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + firsttimeregistration + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
         view.popup.open({
@@ -283,6 +286,7 @@ require([
         var popupDiv = document.createElement("img")
         var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + results.features[0].attributes.image;
         popupDiv.src = zimg;
+        popupDiv.alt = results.features[0].attributes.primary_building_name + " building image"; 
 
         var popupHref = document.createElement("a");
         var createAText = document.createTextNode('Lactation Support');
@@ -304,10 +308,10 @@ require([
       
         
         if(image == '02845.jpg' || image == '02805.jpg' || image == '02121.jpg' || image == '06318.jpg' || image == '02124.jpg' || image == '01208.jpg'){
-          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes +  "</li></ul></p>"
+          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes +  "</li></ul></p>"
         }
         else{
-          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
+          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
         }
         
         view.center = [ results.features[0].geometry.centroid.longitude, results.features[0].geometry.centroid.latitude]
