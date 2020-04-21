@@ -27,7 +27,7 @@
   <nav class="navbar calcite-navbar navbar-fixed-top calcite-text-dark calcite-bg-dark" style="background-color: rgb(210, 233, 249);">
     <!-- Menu -->
     <div class="dropdown calcite-dropdown calcite-text-dark calcite-bg-light" role="presentation">
-      <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
+      <a class="dropdown-toggle" role="menubutton" aria-haspopup="true" aria-expanded="false" tabindex="0">
         <div class="calcite-dropdown-toggle">
           <span class="sr-only">Toggle dropdown menu</span>
           <span></span>
@@ -36,27 +36,19 @@
           <span></span>
         </div>
       </a>
-      <ul class="dropdown-menu">
-        <li><a role="button" data-target="#panelInfo" aria-haspopup="false"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>        
-        <li><a role="button" data-target="#panelFilterRegion" aria-haspopup="false"><span class="glyphicon glyphicon-home"></span> Select a Campus region and a building</a></li>
+      <ul class="dropdown-menu" role="menu">
+        <!--<li><a role="button" data-target="#panelInfo" aria-haspopup="false"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>-->        
+        <li><a role="menuitem" data-target="#panelFilterRegion" aria-haspopup="false" tabindex="0"><span class="glyphicon glyphicon-home"></span> Info</a></li>
         <!--<li><a role="button" data-target="#panelFilterBuilding" aria-haspopup="false"><span class="glyphicon glyphicon-filter"></span> Select a building</a></li>    -->
-        <li><a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
+        <li><a role="menuitem" id="calciteToggleNavbar" href="#calciteToggleNavbar" aria-haspopup="true" tabindex="0"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
       </ul>
     </div>
     <!-- Title -->
-    <div class="calcite-title calcite-overflow-hidden">
+    <div class="calcite-title calcite-overflow-hidden" role="heading" aria-level="1">
       <span class="calcite-title-main">Harvard Lactation Map</span>
       <span class="calcite-title-divider hidden-xs"></span>
       <span class="calcite-title-sub hidden-xs">Lactation Rooms...</span>
-    </div>
-    <!-- Nav -->
-    <ul class="nav navbar-nav calcite-nav">
-      <li>
-        <div class="calcite-navbar-search calcite-search-expander">
-          <div id="searchWidgetDiv"></div>
-        </div>
-      </li>
-    </ul>
+    </div>    
   </nav>
   <!--/.calcite-navbar -->
   <!-- Map  -->
@@ -64,15 +56,18 @@
   <!-- /.calcite-map -->
 
   <!-- Panels -->
-  <div class="calcite-panels calcite-panels-right calcite-text-dark calcite-bg-dark panel-group" style="background-color: rgb(  210, 233, 249);">
+  <div class="calcite-panels calcite-panels-right calcite-text-dark calcite-bg-dark panel-group" style="background-color: rgb(  210, 233, 249);" role="complementary">
     <!-- Info Panel -->
-    <div id="panelInfo" class="panel collapse in" role="tablist">
+    <!--
+    <div id="panelInfo" class="panel collapse in" role="tablist" aria-expanded="true">
       <div id="headingInfo" class="panel-heading" role="tab">
-        <div class="panel-title" style="background-color: rgb(210, 233, 249);">
+        <div class="panel-title" style="background-color: rgb(210, 233, 249);">          
+          
           <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseInfo"
-            aria-expanded="false" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign
+            aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign
 " aria-hidden="true"></span><span class="panel-label">Info</span></a>
           <a name="panelInfo" class="panel-close" role="button" data-toggle="collapse" data-target="#panelInfo" aria-label="panel info"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+            
         </div>
       </div>
       <div id="collapseInfo" class="panel-collapse" role="tabpanel" aria-labelledby="headingInfo">
@@ -81,19 +76,24 @@
         </div>
       </div>
     </div>    
-
+    -->
     <!-- Modal -->
     <!-- Panel Filter Region -->
     <div id="panelFilterRegion" class="panel collapse in" role="tablist">
       <div id="headingFilter" class="panel-heading" role="tab">
         <div class="panel-title" style="background-color: rgb(210, 233, 249);">
+          
           <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseFilter"
-            aria-expanded="false" aria-controls="collapseFilter"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><span class="panel-label">Select a Campus region and a building</span></a>
-          <a name="panelFilterRegion" class="panel-close" role="button" data-toggle="collapse" data-target="#panelFilterRegion" aria-label="panel region and building selection"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+            aria-expanded="false" aria-controls="collapseFilter"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><span class="panel-label">Info</span></a>
+          
+          <a class="panel-close" role="button" data-toggle="collapse" tabindex="0" href="#panelFilterRegion" aria-label="panel region and building selection" ><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
         </div>
       </div>
       <div id="collapseFilter" class="panel-collapse" role="tabpanel" aria-labelledby="headingFilter">
         <div class="panel-body">
+        <p id="info_panel_body">
+        This map shows buildings highlighted in blue that contain formal lactation rooms across Harvard’s campus. information about room amenities pops up when a building is selected which includes a link to the registration page. Each person (HUID holder or campus visitor) must register once for campus-wide access to lactation rooms and private room information. HUID holders will then be able to reserve and check room availability across campus.
+        </p>
           <label for="infoRegions">Select a Campus region...</label>
           <select id="infoRegions" class="form-control">
             <option selected disabled hidden>Select a Campus region...</option>
@@ -132,7 +132,7 @@
     </div>
     -->
   </div>
-  
+  <script type="text/javascript" src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.2/js/calcite-web.min.js"></script>
   <!-- /.calcite-panels -->
   <script type="text/javascript">
     var dojoConfig = {

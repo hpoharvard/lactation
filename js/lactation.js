@@ -121,10 +121,10 @@ require([
         var screenPoint = evt.screenPoint;        
         // set location for the popup
         view.popup.location = evt.mapPoint;
-        view.popup.visible = false;
+        view.popup.visible = false;        
         view.hitTest(screenPoint).then(getSingleBuilding);                
       });
-      
+            
       // create the popup and select the building footprint          
       function getSingleBuilding(response) {
         resultsLayer.popupTemplate = lactationPopup;         
@@ -185,7 +185,8 @@ require([
         view.popup.open({
           title: attributes.primary_building_name,
           content: zcontent
-        });        
+        });
+        view.popup.focus();        
       } 
 
       /********************************
@@ -321,7 +322,8 @@ require([
           content: zcontent,
           //updateLocationEnabled: false,
           location: view.center
-        }); 
+        });
+        view.popup.focus(); 
                
         resultsLayer.addMany(features);
       }              
