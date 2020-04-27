@@ -37,9 +37,9 @@
         </div>
       </a>
       <ul class="dropdown-menu">
-        <!--<li><a role="button" data-target="#panelInfo" aria-haspopup="false"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>-->        
-        <li><a role="menuitem" data-target="#panelFilterRegion" aria-haspopup="true" tabindex="0"><span class="glyphicon glyphicon-home"></span> Info</a></li>
-        <!--<li><a role="button" data-target="#panelFilterBuilding" aria-haspopup="false"><span class="glyphicon glyphicon-filter"></span> Select a building</a></li>    -->
+        
+        <li><a role="menuitem" data-target="#panelFilterRegion" aria-haspopup="true" tabindex="0"><span class="glyphicon glyphicon-home"></span> Info Map</a></li>
+        <li><a role="menuitem" data-target="#panelInfo" aria-haspopup="true" tabindex="0"><span class="glyphicon glyphicon-info-sign"></span> More Info</a></li>        
         <li><a role="menuitem" id="calciteToggleNavbar" href="#calciteToggleNavbar" aria-haspopup="true" tabindex="0"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
       </ul>
     </div>
@@ -47,7 +47,7 @@
     <div class="calcite-title calcite-overflow-hidden" role="heading" aria-level="1">
       <span class="calcite-title-main">Harvard Lactation Map</span>
       <span class="calcite-title-divider hidden-xs"></span>
-      <span class="calcite-title-sub hidden-xs">Lactation Rooms...</span>
+      <span class="calcite-title-sub hidden-xs">Lactation Rooms</span>
     </div>    
   </nav>
   <!--/.calcite-navbar -->
@@ -57,35 +57,14 @@
 
   <!-- Panels -->
   <div class="calcite-panels calcite-panels-right calcite-text-dark calcite-bg-dark panel-group" style="background-color: rgb(  210, 233, 249);" role="complementary">
-    <!-- Info Panel -->
-    <!--
-    <div id="panelInfo" class="panel collapse in" role="tablist" aria-expanded="true">
-      <div id="headingInfo" class="panel-heading" role="tab">
-        <div class="panel-title" style="background-color: rgb(210, 233, 249);">          
-          
-          <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseInfo"
-            aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign
-" aria-hidden="true"></span><span class="panel-label">Info</span></a>
-          <a name="panelInfo" class="panel-close" role="button" data-toggle="collapse" data-target="#panelInfo" aria-label="panel info"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
-            
-        </div>
-      </div>
-      <div id="collapseInfo" class="panel-collapse" role="tabpanel" aria-labelledby="headingInfo">
-        <div id="info_panel_body" class="panel-body">
-        This map shows buildings highlighted in blue that contain formal lactation rooms across Harvard’s campus. information about room amenities pops up when a building is selected which includes a link to the registration page. Each person (HUID holder or campus visitor) must register once for campus-wide access to lactation rooms and private room information. HUID holders will then be able to reserve and check room availability across campus.
-        </div>
-      </div>
-    </div>    
-    -->
-    <!-- Modal -->
+    
+    
     <!-- Panel Filter Region -->
     <div id="panelFilterRegion" class="panel collapse in" role="tablist">
       <div id="headingFilter" class="panel-heading" role="tab">
-        <div class="panel-title" style="background-color: rgb(210, 233, 249);">
-          
+        <div class="panel-title" style="background-color: rgb(210, 233, 249);">          
           <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseFilter"
-            aria-expanded="true" aria-controls="collapseFilter"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><span class="panel-label">Info</span></a>
-          
+            aria-expanded="true" aria-controls="collapseFilter"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><span class="panel-label">Info Map</span></a>          
           <a class="panel-close" role="button" data-toggle="collapse" tabindex="0" href="#panelFilterRegion" aria-label="panel region and building selection" ><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
         </div>
       </div>
@@ -94,9 +73,9 @@
         <p id="info_panel_body">
         This map shows buildings highlighted in blue that contain formal lactation rooms across Harvard’s campus. information about room amenities pops up when a building is selected which includes a link to the registration page. Each person (HUID holder or campus visitor) must register once for campus-wide access to lactation rooms and private room information. HUID holders will then be able to reserve and check room availability across campus.
         </p>
-          <label for="infoRegions">Select a Campus region...</label>
+          <label for="infoRegions">First select a Campus region:</label>
           <select id="infoRegions" class="form-control">
-            <option selected disabled hidden>Select a Campus region...</option>
+            <option selected disabled hidden>Campus region...</option>
             <option value= "Allston">Allston</option>
             <option value= "Arboretum">Arboretum</option>
             <option value= "Cambridge">Cambridge</option>
@@ -104,33 +83,36 @@
             <option value= "Forest">Forest</option>            
           </select>
           <p></p>
-          <label for="infoBuildings">Select a buildings...</label>
+          <label for="infoBuildings">Then select a buildings:</label>
           <select id="infoBuildings" class="form-control">
-              <option selected disabled hidden>Select a buildings...</option>            
+              <option selected disabled hidden>Buildings...</option>            
           </select>  
         </div>                
       </div>      
     </div>
 
-    <!-- Panel Filter Building -->
-    <!--
-    <div id="panelFilterBuilding" class="panel collapse in" role="tablist">
-      <div id="headingFilter" class="panel-heading" role="tab">
-        <div class="panel-title" style="background-color: rgb(210, 233, 249);">
-          <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseFilter"
-            aria-expanded="false" aria-controls="collapseFilter"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span><span class="panel-label">Select a building</span></a>
-          <a name="panelFilterBuilding" class="panel-close" role="button" data-toggle="collapse" data-target="#panelFilterBuilding"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+    <!-- Info Panel -->
+    
+    <div id="panelInfo" class="panel collapse" role="tablist" aria-expanded="true">
+      <div id="headingInfo" class="panel-heading" role="tab">
+        <div class="panel-title" style="background-color: rgb(210, 233, 249);">          
+          
+          <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseInfo"
+            aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-info-sign
+" aria-hidden="true"></span><span class="panel-label"> More Info</span></a>
+          <a class="panel-close" role="button" data-toggle="collapse" tabindex="0" href="#panelInfo" aria-label="panel more information" ><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+            
         </div>
       </div>
-      <div id="collapseFilter" class="panel-collapse" role="tabpanel" aria-labelledby="headingFilter">
-        <div class="panel-body">
-          <select id="infoBuildings" class="form-control">
-              <option selected disabled hidden>Select a buildings...</option>            
-          </select>  
-        </div>                
-      </div>      
-    </div>
-    -->
+      <div id="collapseInfo" class="panel-collapse" role="tabpanel" aria-labelledby="headingInfo">
+        <div id="info_panel_body" class="panel-body">
+          <p class="selectdivision1"><a href="https://accessibility.huit.harvard.edu/digital-accessibility-policy/" target="_blank">Digital Accessibility</a></p>
+          <p class="selectdivision1">Copyright &copy; 2020 President and Fellows of Harvard College</p>
+          <p class="selectdivision1"><a href="mailto:giovanni_zambotti@harvard.edu">Contact us</a></p>
+        </div>
+      </div>
+    </div>    
+    
   </div>
   <script type="text/javascript" src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.2/js/calcite-web.min.js"></script>
   <!-- /.calcite-panels -->
