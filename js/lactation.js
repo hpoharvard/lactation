@@ -1,6 +1,6 @@
 // code by Giovanni Zambotti - 23 January 2020
 // update to ESRI JS 4.14 - 23 January 2020
-// code update - 13 April 2020
+// code update - 13 April 2020, 23 June 2020
 
 require([
       "esri/Map",
@@ -124,7 +124,14 @@ require([
         view.popup.visible = false;        
         view.hitTest(screenPoint).then(getSingleBuilding);                
       });
-            
+
+      // create hyperlink for reservation room
+      var popupHref1 = document.createElement("a");
+      var createAText1 = document.createTextNode('Reserve through RoomBook');
+      popupHref1.setAttribute('href', 'https://roombook.harvard.edu/');
+      popupHref1.target = '_blank';
+      popupHref1.appendChild(createAText1);
+              
       // create the popup and select the building footprint          
       function getSingleBuilding(response) {
         resultsLayer.popupTemplate = lactationPopup;         
@@ -161,7 +168,7 @@ require([
         popupHref.setAttribute('href', attributes.firsttime);
         popupHref.target = '_blank';
         popupHref.appendChild(createAText);
-        
+
         var firsttimeregistration = attributes.firsttime;        
         var alreadyregistered = attributes.alreadyregistered;
         var privatespaces = attributes.privatespaces;
@@ -176,10 +183,10 @@ require([
         //console.log(popupHref.outerHTML)
 
         if(image == '02845.jpg' || image == '02805.jpg' || image == '02121.jpg' || image == '06318.jpg' || image == '02124.jpg' || image == '01208.jpg'){
-          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
+          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + popupHref1.outerHTML + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
         }
         else{
-          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
+          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + popupHref1.outerHTML + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
         }        
         //var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + firsttimeregistration + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
         view.popup.open({
@@ -309,10 +316,10 @@ require([
       
         
         if(image == '02845.jpg' || image == '02805.jpg' || image == '02121.jpg' || image == '06318.jpg' || image == '02124.jpg' || image == '01208.jpg'){
-          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes +  "</li></ul></p>"
+          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + popupHref1.outerHTML + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes +  "</li></ul></p>"
         }
         else{
-          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
+          var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + popupHref1.outerHTML + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
         }
         
         view.center = [ results.features[0].geometry.centroid.longitude, results.features[0].geometry.centroid.latitude]
