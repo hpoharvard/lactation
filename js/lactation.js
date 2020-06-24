@@ -42,7 +42,9 @@ require([
         Cambridge: [-71.1168498, 42.3759086],
         Longwood: [-71.1024294, 42.3389915],
         Forest: [-72.190308, 42.5313531]
-      } 
+      }
+
+      var zimgurl = "https://prodsmap.cadm.harvard.edu/images/root_images/"
 
       //document.getElementById("foo").style.display = "none"; 
       var myzoom = 14, lon = -71.116076, lat = 42.35800;
@@ -159,7 +161,7 @@ require([
 
         // create content for the popup
         var popupDiv = document.createElement("img")
-        var zimg = "https://prodsmap.cadm.harvard.edu/images/root_images/" + image;
+        var zimg = zimgurl + image;
         popupDiv.src = zimg;
         popupDiv.alt = attributes.primary_building_name + " building image";
 
@@ -292,7 +294,7 @@ require([
         var obj = results.features[0].attributes;
         
         var popupDiv = document.createElement("img")
-        var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + results.features[0].attributes.image;
+        var zimg = zimgurl + results.features[0].attributes.image;
         popupDiv.src = zimg;
         popupDiv.alt = results.features[0].attributes.primary_building_name + " building image"; 
 
