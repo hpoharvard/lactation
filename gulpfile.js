@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var minifycss = require('gulp-minify-css');
-var uglify = require("gulp-uglify");
+var uglify = require("gulp-uglify-es");
 
 gulp.task('css',function(){
 	return gulp.src('css/*.css')

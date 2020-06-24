@@ -36,7 +36,7 @@ require([
       function(Map, MapView, Locate, FeatureLayer, GraphicsLayer, Graphic, SimpleRenderer, SimpleMarkerSymbol, 
       SimpleFillSymbol, UniqueValueRenderer, Extent, Popup, VectorTileLayer, CalciteMaps, CalciteMapsArcGIS) {    
       
-      const regionsList = {
+      var regionsList = {
         Allston: [-71.1237912, 42.3626648],
         Arboretum: [-71.1333697, 42.295822],
         Cambridge: [-71.1168498, 42.3759086],
@@ -56,8 +56,8 @@ require([
         // URL to the vector tile service
         url: "https://www.arcgis.com/sharing/rest/content/items/7dc6cea0b1764a1f9af2e679f642f0f5/resources/styles/root.json"
       });     
-     
-      var lactationURL = "https://devtmap.cadm.harvard.edu/server/rest/services/Hosted/lactationroom04132020/FeatureServer"
+
+      var lactationURL = "https://prodtmap.cadm.harvard.edu/server/rest/services/Hosted/lactationroom04132020/FeatureServer"
       var lactationPopup = { // autocasts as new PopupTemplate()
         title: "{buildingroomname}"
       };
@@ -159,7 +159,7 @@ require([
 
         // create content for the popup
         var popupDiv = document.createElement("img")
-        var zimg = "https://devsmap.cadm.harvard.edu/images/root_images/" + image;
+        var zimg = "https://prodsmap.cadm.harvard.edu/images/root_images/" + image;
         popupDiv.src = zimg;
         popupDiv.alt = attributes.primary_building_name + " building image";
 
