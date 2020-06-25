@@ -80,14 +80,13 @@ require([
         outFields: ["*"],
         visible: true,
         renderer: buildingRenderer
-      });        
-      // GraphicsLayer for displaying results
+      });    360 
+      // Graph6sLayer for displaying results
       var resultsLayer = new GraphicsLayer();
 
       var map = new Map({
         basemap: "topo",
         layers: [lactationLayer, resultsLayer],
-
       });
 
       var view = new MapView({
@@ -105,7 +104,7 @@ require([
       view.constraints = {rotationEnabled: false};
      
       view.popup.dockOptions = {position: "bottom-left"}
-                  
+
       /********************************
       * Create a locate widget object.
       *********************************/        
@@ -123,7 +122,7 @@ require([
         var screenPoint = evt.screenPoint;        
         // set location for the popup
         view.popup.location = evt.mapPoint;
-        view.popup.visible = false;        
+        view.popup.visible = true;        
         view.hitTest(screenPoint).then(getSingleBuilding);                
       });
 
@@ -160,11 +159,7 @@ require([
         var image = attributes.image;
 
         // create content for the popup
-        var popupDiv = document.createElement("img")
-        var zimg = zimgurl + image;
-        popupDiv.src = zimg;
-        popupDiv.alt = attributes.primary_building_name + " building image";
-
+        
         var popupHref = document.createElement("a");
         var createAText = document.createTextNode('Lactation Support');
         popupHref.setAttribute('href', attributes.firsttime);
@@ -182,15 +177,19 @@ require([
         var refrigerator = attributes.refrigerator;
         var additionalnotes = attributes.notes;
 
-        //console.log(popupHref.outerHTML)
-
         if(image == '02845.jpg' || image == '02805.jpg' || image == '02121.jpg' || image == '06318.jpg' || image == '02124.jpg' || image == '01208.jpg'){
-          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + popupHref1.outerHTML + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
+          var zcontent = "<ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + popupHref1.outerHTML + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul>"
         }
         else{
+          var popupDiv = document.createElement("img")
+          var zimg = zimgurl + image;
+          popupDiv.src = zimg;
+          popupDiv.alt = attributes.primary_building_name + " building image";
+
           var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + popupHref1.outerHTML + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
         }        
         //var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + firsttimeregistration + "</li><li>Already Registered: " + alreadyregistered + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela Symphonys: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "<li>Refrigerator: " + refrigerator + "</li></ul></p>"
+        
         view.popup.open({
           title: attributes.primary_building_name,
           content: zcontent
@@ -264,14 +263,14 @@ require([
         console.log(selectedBuildings)
         //queryLactationBuldings(selectedBuildings)
         queryLactationBuldings(selectedBuildings).then(displayResultsBuldings);
-        //view.popup.visible = true;
+        view.popup.visible = true;
       });
 
       function queryLactationBuldings(myval) {
         var query = lactationLayer.createQuery();
         query.where = "primary_building_name = '" + myval + "'";
         query.outSpatialReference = 4326;
-        console.log(query)
+        //console.log(query)
         return lactationLayer.queryFeatures(query);        
       }      
 
@@ -293,11 +292,7 @@ require([
         var list = document.createElement('ul');
         var obj = results.features[0].attributes;
         
-        var popupDiv = document.createElement("img")
-        var zimg = zimgurl + results.features[0].attributes.image;
-        popupDiv.src = zimg;
-        popupDiv.alt = results.features[0].attributes.primary_building_name + " building image"; 
-
+        
         var popupHref = document.createElement("a");
         var createAText = document.createTextNode('Lactation Support');
         popupHref.setAttribute('href', results.features[0].attributes.firsttime);
@@ -316,11 +311,15 @@ require([
         var additionalnotes = results.features[0].attributes.notes;
         var image = results.features[0].attributes.image;   
       
-        
         if(image == '02845.jpg' || image == '02805.jpg' || image == '02121.jpg' || image == '06318.jpg' || image == '02124.jpg' || image == '01208.jpg'){
-          var zcontent = "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + popupHref1.outerHTML + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes +  "</li></ul></p>"
+          var zcontent = "<ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + popupHref1.outerHTML + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes +  "</li></ul>"
         }
         else{
+          var popupDiv = document.createElement("img")
+          var zimg = zimgurl + results.features[0].attributes.image;
+          popupDiv.src = zimg;
+          popupDiv.alt = results.features[0].attributes.primary_building_name + " building image"; 
+
           var zcontent = popupDiv.outerHTML + "<p><ul><li>First Time Registration: " + popupHref.outerHTML + "</li><li>Already Registered: " + popupHref1.outerHTML + "</li><li>Private Space: " + privatespaces + "</li><li>Reservation Online: " + reservationonly + "</li><li>Drop In: " + dropin + "</li><li>Door Access: " + dooraccess + "</li><li>Pump Medela: " + pumpmedelasymphony + "</li><li>Sink: " + sink + "</li><li>Refrigerator: " + refrigerator + "</li><li>Additional Notes: " + additionalnotes + "</li></ul></p>"
         }
         
@@ -329,6 +328,7 @@ require([
         view.popup.open({
           title: results.features[0].attributes.primary_building_name,
           content: zcontent,
+          collapseEnabled: false,
           //updateLocationEnabled: false,
           location: view.center
         });
